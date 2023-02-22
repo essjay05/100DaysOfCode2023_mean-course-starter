@@ -5,7 +5,10 @@ import { Component } from '@angular/core'
   templateUrl: './post-create.component.html'
 })
 export class PostCreateComponent {
-  onAddPost = () => {
-    alert('Post was clicked')
+  newPost = 'No content...'
+
+  onAddPost = (postInput: HTMLTextAreaElement) => {
+    console.dir(postInput)
+    this.newPost = postInput.value
   }
 }
