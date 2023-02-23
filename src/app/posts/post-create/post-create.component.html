@@ -1,6 +1,9 @@
 <mat-card>
   <mat-form-field>
-    <textarea matInput name="" [(ngModel)]="enteredValue" cols="30" rows="6"></textarea>
+    <input matInput type="text" [(ngModel)]="enteredTitle">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput name="" [(ngModel)]="enteredContent" cols="30" rows="6"></textarea>
   </mat-form-field>
   <button
     mat-raised-button 
