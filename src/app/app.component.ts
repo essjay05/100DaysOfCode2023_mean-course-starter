@@ -13,6 +13,6 @@ export class AppComponent {
   storedPosts: Post[] = []
 
   onPostAdded(post) {
-    this.storedPosts.push( )
+    this.storedPosts.push(post )
   }
 }
