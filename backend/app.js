@@ -18,8 +18,12 @@ app.use((req, res, next) => {
 })
 
 app.post('/api/posts', (req, res, next) => {
-  console.log(`req.body:`)
-  console.log(req.body)
+  const post = req.body
+  console.log('post to api/posts req.body.post is: ')
+  console.log(post)
+  res.status(201).json({
+    message: `Post added successfully.`
+  })
 }) 
 
 app.use('/api/posts', (req, res, next) => {
