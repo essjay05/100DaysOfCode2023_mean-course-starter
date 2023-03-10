@@ -1,9 +1,20 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+require('dotenv').config()
 
 const Post = require('./models/post')
 
 const app = express()
+
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PW}@cluster0.h2hnhc2.mongodb.net/?retryWrites=true&w=majority`)
+  .then(() => {
+    console.log(`Connected to MongoDB!`)
+  })
+  .catch((err) => {
+    console.log(`Connection to database failed :(`)
+    console.error(err)
+  })
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
