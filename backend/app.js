@@ -7,7 +7,7 @@ const Post = require('./models/post')
 
 const app = express()
 
-mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PW}@cluster0.h2hnhc2.mongodb.net/?retryWrites=true&w=majority`)
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PW}@cluster0.h2hnhc2.mongodb.net/node-angular?retryWrites=true&w=majority`)
   .then(() => {
     console.log(`Connected to MongoDB!`)
   })
@@ -35,6 +35,7 @@ app.post('/api/posts', (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   })
+  post.save()
   console.log('post to api/posts req.body.post is: ')
   console.log(post)
   res.status(201).json({
