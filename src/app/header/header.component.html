@@ -1,8 +1,9 @@
 <mat-toolbar color="primary">
   <span><a routerLink="/">My Messages</a></span>
+  <span class="spacer"></span>
   <ul>
     <li>
-      <a routerLink="/create">Add Post</a>
+      <a mat-button routerLink="/create" [routerLinkActive]="" #rla="routerLinkActive" [ngClass]="rla.isActive?'mat-accent':''" [routerLinkActiveOptions]="{exact: true}">Add Post</a>
     </li>
   </ul>
 </mat-toolbar>
