@@ -12,10 +12,19 @@ export class PostsService {
   constructor(private http: HttpClient) {}
 
   getPosts() {
-    this.http.get<{message: string, posts: Post[]}>(`http://localhost:3333/api/posts`)
-      .pipe()
+    this.http
+      .get<{message: string, posts: any}>(`http://localhost:3333/api/posts`)
+      .pipe(map((postData) => {
+        return postData.posts.map(post => {
+          return {
+            title: post.title,
+            content: post.content,
+            id: post._id
+          }
+        })
+      }))
       .subscribe((postData) => {
-        this.posts = postData.posts
+        this.posts = postData
         this.postsUpdated.next([...this.posts])
       })
   }
@@ -33,5 +42,12 @@ export class PostsService {
         this.postsUpdated.next([...this.posts]);
       }) 
     
+  }
+
+  deletePost(postId: string) {
+    this.http.delete(`http://localhost:3333/api/posts/${postId}`)
+      .subscribe(() => {
+        console.log(`Deleted!`)
+      })
   }
 }
