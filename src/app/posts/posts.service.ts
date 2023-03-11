@@ -47,7 +47,7 @@ export class PostsService {
   deletePost(postId: string) {
     this.http.delete(`http://localhost:3333/api/posts/${postId}`)
       .subscribe(() => {
-        console.log(`Deleted!`)
+        console.log(`Posts.service.ts post id:${postId} deleted successfully!`)
       })
   }
 }
