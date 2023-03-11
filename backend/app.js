@@ -59,7 +59,7 @@ app.delete('/api/posts/:id', (req, res, next) => {
   const postId = req.params.id
   Post.deleteOne({_id: postId}).then(result => {
     console.log(result)
-    res.status(200).json({ message: `Post id:${postId} deleted from db successfully!`})
+    res.status(200).json({ message: `Post deleted from db successfully!`})
   })
   
 })
