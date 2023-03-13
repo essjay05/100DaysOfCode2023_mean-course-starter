@@ -35,16 +35,28 @@ export class PostsService {
   }
 
   getPost(id: string) {
-    return this.http.get<{_id: string, title: string, content: string}>(`http://localhost:3333/api/posts/${id}`)
+    return this.http.get<{_id: string, title: string, content: string}>(
+      `http://localhost:3333/api/posts/${id}`
+    )
   }
 
-  addPost(title: string, content: string) {
-    const post: Post = { id: null, title: title, content: content }
-    this.http.post<{message: string, postId: string}>(`http://localhost:3333/api/posts`, post)
+  addPost(title: string, content: string, image: File) {
+    const postData = new FormData()
+    postData.append('title', title)
+    postData.append('content', content)
+    postData.append('image', image, title)
+    this.http
+      .post<{message: string, postId: string}>(
+        `http://localhost:3333/api/posts`,
+        postData
+      )
       .subscribe((responseData) => {
+        const post: Post = {
+          id: responseData.postId, 
+          title: title, 
+          content: content
+        }
         console.log(responseData.message)
-        const postId = responseData.postId
-        post.id = postId
         this.posts.push(post);
         this.postsUpdated.next([...this.posts]);
         this.router.navigate(['/'])
@@ -54,7 +66,11 @@ export class PostsService {
 
   updatePost(id: string, title: string, content: string) {
     const post: Post = { id: id, title: title, content: content }
-    this.http.put<{message: String, post: Post}>(`http://localhost:3333/api/posts/${post.id}`, post)
+    this.http
+      .put<{message: String, post: Post}>(
+        `http://localhost:3333/api/posts/${post.id}`, 
+        post
+      )
       .subscribe((response) => {
         console.log(response.message)
         const updatedPosts = [...this.posts]
