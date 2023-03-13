@@ -46,6 +46,7 @@ export class PostCreateComponent implements OnInit {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true
     if (this.mode === 'create') {
       this.postsService.addPost(form.value.title, form.value.content)
     } else {

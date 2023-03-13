@@ -2,3 +2,7 @@
   text-align: center;
   margin: 2.5rem auto;
 }
+
+mat-spinner {
+  margin: auto;
+}
