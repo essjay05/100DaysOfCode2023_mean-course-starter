@@ -1,5 +1,6 @@
 mat-form-field,
-textarea {
+mat-form-field input,
+mat-form-field textarea {
   width: 100%;
 }
 
