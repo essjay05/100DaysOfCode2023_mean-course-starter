@@ -14,6 +14,7 @@ export class PostCreateComponent implements OnInit {
   enteredTitle = "";
   enteredContent = "";
   post: Post;
+  isLoading = false;
   private mode = 'create';
   private postId: string;
   
@@ -28,7 +29,9 @@ export class PostCreateComponent implements OnInit {
       if (paramMap.has('postId')) {
         this.mode = 'edit'
         this.postId = paramMap.get('postId')
+        this.isLoading = true
         this.postsService.getPost(this.postId).subscribe(postData => {
+          this.isLoading = false
           this.post = { id: postData._id, title: postData.title, content: postData.content }
         })
       } else {
