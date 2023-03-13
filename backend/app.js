@@ -26,7 +26,7 @@ app.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept')
   res.setHeader(
     'Access-Control-Allow-Methods',
-    'GET, POST, PATCH, DELETE, OPTIONS')
+    'GET, POST, PUT, PATCH, DELETE, OPTIONS')
   next()
 })
 
@@ -44,6 +44,7 @@ app.post('/api/posts', (req, res, next) => {
   
 }) 
 
+// get all
 app.get('/api/posts', (req, res, next) => {
   Post.find().then(documents => {
       console.log(documents)
@@ -53,7 +54,29 @@ app.get('/api/posts', (req, res, next) => {
       })
     })
     .catch(err => console.error(err))
-  
+})
+
+// get one post
+app.get('/api/posts/:id', (req, res, next) => {
+  Post.findById(req.params.id).then(post => {
+    if (post) {
+      res.status(200).json(post)
+    } else {
+      res.status(404).json({ message: `Post not found`})
+    }
+  })
+})
+
+app.put('/api/posts/:id', (req, res, next) => {
+  const post = new Post({
+    _id: req.params.id,
+    title: req.body.title,
+    content: req.body.content
+  })
+  Post.updateOne({_id: req.params.id}, post).then(result => {
+    console.log(result)
+    res.status(200).json({ message: `Update post successful!`})
+  })
 })
 
 app.delete('/api/posts/:id', (req, res, next) => {
