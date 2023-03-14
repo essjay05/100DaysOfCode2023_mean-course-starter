@@ -4,6 +4,9 @@
   --white-color: #ffffff;
   --black-color: #000000;
   --default-transition: 0.3s ease-in-out;
+  --default-box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  --default-border-radius: 0.25rem;
+  --default-spacing: 0.5rem;
 }
 
 html,

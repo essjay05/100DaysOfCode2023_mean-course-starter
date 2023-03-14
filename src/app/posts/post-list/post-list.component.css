@@ -6,3 +6,14 @@
 mat-spinner {
   margin: auto;
 }
+
+.post-image,
+.post-image img {
+  width: 100%;
+}
+
+.post-image img {
+  box-shadow: var(--default-box-shadow);
+  border-radius: var(--default-border-radius);
+  margin-bottom: var(--default-spacing);
+}
