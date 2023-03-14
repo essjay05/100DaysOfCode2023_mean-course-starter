@@ -27,27 +27,29 @@ const storage = multer.diskStorage({
 })
 
 // Create post endpoint
-router.post('', multer({ storage: storage }).single('image'), (req, res, next) => {
-  const url = req.protocol + '://' + req.get('host')
-  const post = new Post({
-    title: req.body.title,
-    content: req.body.content,
-    imagePath: url + '/images/' + req.file.filename
-  })
-  post.save().then(createdPost => {
-    res.status(201).json({
-      message: `Post added successfully.`,
-      post: {
-        _id: createdPost._id,
-        title: createdPost.title,
-        content: createdPost.content,
-        imagePath: createdPost.imagePath
-      }
-
+router.post(
+  '', 
+  multer({ storage: storage }).single('image'), 
+  (req, res, next) => {
+    const url = req.protocol + '://' + req.get('host')
+    const post = new Post({
+      title: req.body.title,
+      content: req.body.content,
+      imagePath: url + '/images/' + req.file.filename
     })
-  })
-  
-}) 
+    post.save().then(createdPost => {
+      res.status(201).json({
+        message: `Post added successfully.`,
+        post: {
+          _id: createdPost._id,
+          title: createdPost.title,
+          content: createdPost.content,
+          imagePath: createdPost.imagePath
+        }
+      })
+    })
+  }
+) 
 
 // READ/get all posts endpoint
 router.get('', (req, res, next) => {
@@ -73,17 +75,26 @@ router.get('/:id', (req, res, next) => {
 })
 
 // Update one post
-router.put('/:id', (req, res, next) => {
-  const post = new Post({
-    _id: req.params.id,
-    title: req.body.title,
-    content: req.body.content
-  })
-  Post.updateOne({_id: req.params.id}, post).then(result => {
-    console.log(result)
-    res.status(200).json({ message: `Update post successful!`})
-  })
-})
+router.put(
+  '/:id', 
+  multer({ storage: storage }).single('image'), 
+  (req, res, next) => {
+    let imagePath = req.body.imagePath
+    if (req.file) {
+      const url = req.protocol + '://' + req.get('host')
+      imagePath = url + '/images/' + req.file.filename
+    }
+    const post = new Post({
+      _id: req.body.id,
+      title: req.body.title,
+      content: req.body.content,
+      imagePath: imagePath
+    })
+    Post.updateOne({ _id: req.params.id }, post).then(result => {
+      res.status(200).json({ message: 'Update post successful!'})
+    })
+  }
+)
 
 // Delete one post
 router.delete('/:id', (req, res, next) => {
